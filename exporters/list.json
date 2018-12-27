@@ -1,0 +1,110 @@
+[
+  {
+    "type": "JsonHash",
+    "description": "Json hash",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "JsonHash.mst",
+    "fileExt": "json",
+    "predefined": true
+  },
+  {
+    "type": "JsonArray",
+    "description": "Json array",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "JsonArray.mst",
+    "fileExt": "json",
+    "predefined": true
+  },
+  {
+    "type": "XML",
+    "description": "Plain XML format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "XML.mst",
+    "fileExt": "xml",
+    "predefined": true
+  },
+  {
+    "type": "Css",
+    "description": "css format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "Css.mst",
+    "fileExt": "css",
+    "predefined": true
+  },
+  {
+    "type": "OldCss",
+    "description": "old css format",
+    "allowTrim": false,
+    "allowRotation": false,
+    "template": "OldCss.mst",
+    "fileExt": "css",
+    "predefined": true
+  },
+  {
+    "type": "Pixi",
+    "description": "pixi.js format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "JsonHash.mst",
+    "fileExt": "json",
+    "predefined": true
+  },
+  {
+    "type": "PhaserHash",
+    "description": "Phaser (json hash)",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "JsonHash.mst",
+    "fileExt": "json",
+    "predefined": true
+  },
+  {
+    "type": "PhaserArray",
+    "description": "Phaser (json array)",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "JsonArray.mst",
+    "fileExt": "json",
+    "predefined": true
+  },
+  {
+    "type": "Cocos2d",
+    "description": "cocos2d format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "Cocos2d.mst",
+    "fileExt": "plist",
+    "predefined": true
+  },
+  {
+    "type": "Unreal",
+    "description": "UnrealEngine - Paper2d",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "Unreal.mst",
+    "fileExt": "paper2dsprites",
+    "predefined": true
+  },
+  {
+    "type": "Starling",
+    "description": "Starling format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "Starling.mst",
+    "fileExt": "xml",
+    "predefined": true
+  },
+  {
+    "type": "Spine",
+    "description": "Spine atlas",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "Spine.mst",
+    "fileExt": "atlas",
+    "predefined": true
+  }
+]
