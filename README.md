@@ -1,5 +1,6 @@
 # free-tex-packer-core
-> Core Free texture packer module
+[![Stats](https://nodei.co/npm/free-tex-packer-core.png?downloads=true&stars=true)](https://www.npmjs.com/package/free-tex-packer-core) \
+Core Free texture packer module
 
 # Install
    
