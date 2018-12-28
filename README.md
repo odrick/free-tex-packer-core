@@ -16,9 +16,9 @@ images.push({path: "img2.png", contents: fs.readFileSync("./img2.png")});
 images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 
 texturePacker(images, null, (files) => {
-	for(let item of files) {
-		console.log(item.name, item.buffer);
-	}
+    for(let item of files) {
+        console.log(item.name, item.buffer);
+    }
 });
 
 ```
@@ -28,20 +28,20 @@ texturePacker(images, null, (files) => {
 Use packer options object
 
 ```js
-let texturePacker = require('gulp-free-tex-packer');
+let texturePacker = require("free-tex-packer-core");
 
 let options = {
-	textureName: "my-texture",
-	width: 1024,
-	height: 1024,
-	fixedSize: false,
-	padding: 2,
-	allowRotation: true,
-	detectIdentical: true,
-	allowTrim: true,
-	exporter: "Pixi",
-	removeFileExtension: true,
-	prependFolderName: true
+    textureName: "my-texture",
+    width: 1024,
+    height: 1024,
+    fixedSize: false,
+    padding: 2,
+    allowRotation: true,
+    detectIdentical: true,
+    allowTrim: true,
+    exporter: "Pixi",
+    removeFileExtension: true,
+    prependFolderName: true
 };
 
 let images = [];
@@ -51,11 +51,10 @@ images.push({path: "img2.png", contents: fs.readFileSync("./img2.png")});
 images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 
 texturePacker(images, options, (files) => {
-	for(let item of files) {
-		console.log(item.name, item.buffer);
-	}
+    for(let item of files) {
+        console.log(item.name, item.buffer);
+    }
 });
-
 ```
 
 # Available options
@@ -173,19 +172,23 @@ There are 3 objects passed to template:
 **Custom template usage example**
 
 ```js
-let texturePacker = require('gulp-free-tex-packer');
+let texturePacker = require("free-tex-packer-core");
 
-gulp.task('pack', function() {
-    let exporter = {
-        fileExt: "json",
-        template: "./MyTemplate.mst"
-    };
+let images = [];
 
-    return gulp.src('src/**/*.*')
-		.pipe(texturePacker({
-		    exporter: exporter
-		}))
-		.pipe(gulp.dest('dest/'));
+images.push({path: "img1.png", contents: fs.readFileSync("./img1.png")});
+images.push({path: "img2.png", contents: fs.readFileSync("./img2.png")});
+images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
+
+let exporter = {
+    fileExt: "json",
+    template: "./MyTemplate.mst"
+};
+
+texturePacker(images, {exporter: exporter}, (files) => {
+    for(let item of files) {
+        console.log(item.name, item.buffer);
+    }
 });
 ```
 
