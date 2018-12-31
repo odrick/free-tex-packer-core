@@ -76,7 +76,7 @@ texturePacker(images, options, (files) => {
 * `tinify` - tinify texture using [TinyPNG](https://tinypng.com/). Default: **false**
 * `tinifyKey` - [TinyPNG key](https://tinypng.com/developers). Default: **""**
 * `packerMethod` - name of pack method (BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule or ContactPointRule). Default: **BestShortSideFit**
-* `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, XML, Starling, Cocos2d or Unreal), or custom exporter (see below). Default: **JsonHash**
+* `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, XML, Starling, Cocos2d, Spine or Unreal), or custom exporter (see below). Default: **JsonHash**
 * `filter` - name of bitmap filter (grayscale, mask or none). Default: **none**
 
 # Custom exporter
