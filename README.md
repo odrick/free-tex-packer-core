@@ -78,6 +78,7 @@ texturePacker(images, options, (files) => {
 * `packerMethod` - name of pack method (BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule or ContactPointRule). Default: **BestShortSideFit**
 * `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, XML, Starling, Cocos2d, Spine or Unreal), or custom exporter (see below). Default: **JsonHash**
 * `filter` - name of bitmap filter (grayscale, mask or none). Default: **none**
+* `appInfo` - external app info. Required fields: url and version. Default: **null**
 
 # Custom exporter
 
