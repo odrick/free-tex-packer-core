@@ -72,7 +72,7 @@ function startExporter(exporter, data, options) {
     let renderOptions = {
         rects: rects,
         config: config,
-        appInfo: config.appInfo || appInfo
+        appInfo: options.appInfo || appInfo
     };
     
     if(exporter.content) {

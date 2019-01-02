@@ -62,7 +62,8 @@ class FilesProcessor {
                     removeFileExtension: options.removeFileExtension,
                     prependFolderName: options.prependFolderName,
                     base64Export: options.base64Export,
-                    scale: options.scale
+                    scale: options.scale,
+                    appInfo: options.appInfo
                 };
                 
                 files.push({
