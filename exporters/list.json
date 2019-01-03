@@ -106,5 +106,14 @@
     "template": "Spine.mst",
     "fileExt": "atlas",
     "predefined": true
+  },
+  {
+    "type": "UIKit",
+    "description": "IOS UIKit plist",
+    "allowTrim": true,
+    "allowRotation": false,
+    "template": "UIKit.mst",
+    "fileExt": "plist",
+    "predefined": true
   }
 ]

@@ -69,6 +69,9 @@ module.exports = function(images, options, cb) {
     else {
         exporter = options.exporter;
     }
+	
+	if(!exporter.allowRotation) options.allowRotation = false;
+	if(!exporter.allowTrim) options.allowTrim = false;
     
     if(!exporter) {
         throw new Error(getErrorDescription("Unknown exporter " + options.exporter));
