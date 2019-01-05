@@ -68,6 +68,7 @@ texturePacker(images, options, (files) => {
 * `allowRotation` - allow image rotation. Default: **true**
 * `detectIdentical` - allow detect identical images. Default: **true**
 * `allowTrim` - allow trim images. Default: **true**
+* `trimMode` - trim or crop. Default: **trim**
 * `removeFileExtension` - remove file extensions from frame names. Default: **false**
 * `prependFolderName` - prepend folder name to frame names. Default: **true**
 * `textureFormat` - output file format (png or jpg). Default: **png**

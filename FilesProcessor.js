@@ -63,7 +63,8 @@ class FilesProcessor {
                     prependFolderName: options.prependFolderName,
                     base64Export: options.base64Export,
                     scale: options.scale,
-                    appInfo: options.appInfo
+                    appInfo: options.appInfo,
+                    trimMode: options.trimMode
                 };
                 
                 files.push({

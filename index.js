@@ -39,6 +39,7 @@ module.exports = function(images, options, cb) {
     options.allowRotation = options.allowRotation === undefined ? true : options.allowRotation;
     options.detectIdentical = options.detectIdentical === undefined ? true : options.detectIdentical;
     options.allowTrim = options.allowTrim === undefined ? true : options.allowTrim;
+    options.trimMode = options.trimMode === undefined ? "trim" : options.trimMode;
     options.removeFileExtension = options.removeFileExtension === undefined ? false : options.removeFileExtension;
     options.prependFolderName = options.prependFolderName === undefined ? true : options.prependFolderName;
     options.textureFormat = options.textureFormat === undefined ? "png" : options.textureFormat;
