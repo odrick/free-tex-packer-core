@@ -491,7 +491,7 @@ class MaxRectsBin extends Packer {
         let keys = Object.keys(METHOD);
         
         for(let name of keys) {
-            if(type == name.toLowerCase()) return METHOD[name]; 
+            if(type === name.toLowerCase()) return METHOD[name];
         }
         
         return null;

@@ -1,14 +1,16 @@
 let MaxRectsBin = require("./MaxRectsBin");
+let MaxRectsPacker = require("./MaxRectsPacker");
 
 const list = [
-    MaxRectsBin
+    MaxRectsBin,
+    MaxRectsPacker
 ];
 
 function getPackerByType(type) {
     type = type.toLowerCase();
     
     for(let item of list) {
-        if(item.type.toLowerCase() == type) {
+        if(item.type.toLowerCase() === type) {
             return item;
         }
     }
