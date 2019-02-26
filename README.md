@@ -76,7 +76,8 @@ texturePacker(images, options, (files) => {
 * `scale` - scale size and positions in atlas. Default: **1**
 * `tinify` - tinify texture using [TinyPNG](https://tinypng.com/). Default: **false**
 * `tinifyKey` - [TinyPNG key](https://tinypng.com/developers). Default: **""**
-* `packerMethod` - name of pack method (BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule or ContactPointRule). Default: **BestShortSideFit**
+* `packer` - type of packer (MaxRectsBin or MaxRectsPacker). Default: **MaxRectsBin**
+* `packerMethod` - name of pack method (MaxRectsBin: BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule, ContactPointRule. MaxRectsPacker: Smart, Square, SmartSquare). Default: **BestShortSideFit**
 * `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, XML, Starling, Cocos2d, Spine, Unreal, UIKit), or custom exporter (see below). Default: **JsonHash**
 * `filter` - name of bitmap filter (grayscale, mask or none). Default: **none**
 * `appInfo` - external app info. Required fields: url and version. Default: **null**
@@ -200,6 +201,7 @@ texturePacker(images, {exporter: exporter}, (files) => {
 * **Jimp** - https://github.com/oliver-moran/jimp
 * **mustache.js** - https://github.com/janl/mustache.js/
 * **tinify** - https://github.com/tinify/tinify-nodejs
+* **MaxRectsPacker** - https://github.com/soimy/maxrects-packer
 
 ---
 License: MIT
