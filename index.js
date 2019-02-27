@@ -36,6 +36,7 @@ module.exports = function(images, options, cb) {
     options.height = options.height === undefined ? 2048 : options.height;
     options.fixedSize = options.fixedSize === undefined ? false : options.fixedSize;
     options.padding = options.padding === undefined ? 0 : options.padding;
+    options.extrude = options.extrude === undefined ? 0 : options.extrude;
     options.allowRotation = options.allowRotation === undefined ? true : options.allowRotation;
     options.detectIdentical = options.detectIdentical === undefined ? true : options.detectIdentical;
     options.allowTrim = options.allowTrim === undefined ? true : options.allowTrim;
