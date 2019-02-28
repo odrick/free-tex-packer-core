@@ -76,6 +76,8 @@ class TextureRenderer {
             let sy = item.spriteSourceSize.y;
             let sw = item.spriteSourceSize.w;
             let sh = item.spriteSourceSize.h;
+            let ow = item.sourceSize.w;
+            let oh = item.sourceSize.h;
 
             if (item.rotated) {
                 img = img.clone();
@@ -85,25 +87,57 @@ class TextureRenderer {
                 sy = item.spriteSourceSize.x;
                 sw = item.spriteSourceSize.h;
                 sh = item.spriteSourceSize.w;
+                ow = item.sourceSize.h;
+                oh = item.sourceSize.w;
+            }
+
+            if(options.extrude) {
+                let extrudeImage = img.clone();
+
+                //Render corners
+                extrudeImage.resize(1, 1);
+                extrudeImage.blit(img, 0, 0, 0, 0, 1, 1);
+                extrudeImage.resize(options.extrude, options.extrude);
+                this.buffer.blit(extrudeImage, dx - options.extrude, dy - options.extrude, 0, 0, options.extrude, options.extrude);
+
+                extrudeImage.resize(1, 1);
+                extrudeImage.blit(img, 0, 0, ow-1, 0, 1, 1);
+                extrudeImage.resize(options.extrude, options.extrude);
+                this.buffer.blit(extrudeImage, dx + sw, dy - options.extrude, 0, 0, options.extrude, options.extrude);
+
+                extrudeImage.resize(1, 1);
+                extrudeImage.blit(img, 0, 0, 0, oh-1, 1, 1);
+                extrudeImage.resize(options.extrude, options.extrude);
+                this.buffer.blit(extrudeImage, dx - options.extrude, dy + sh, 0, 0, options.extrude, options.extrude);
+
+                extrudeImage.resize(1, 1);
+                extrudeImage.blit(img, 0, 0, ow-1, oh-1, 1, 1);
+                extrudeImage.resize(options.extrude, options.extrude);
+                this.buffer.blit(extrudeImage, dx + sw, dy + sh, 0, 0, options.extrude, options.extrude);
+
+                //Render borders
+                extrudeImage.resize(1, sh);
+                extrudeImage.blit(img, 0, 0, 0, sy, 1, sh);
+                extrudeImage.resize(options.extrude, sh);
+                this.buffer.blit(extrudeImage, dx - options.extrude, dy, 0, 0, options.extrude, sh);
+
+                extrudeImage.resize(1, sh);
+                extrudeImage.blit(img, 0, 0, ow-1, sy, 1, sh);
+                extrudeImage.resize(options.extrude, sh);
+                this.buffer.blit(extrudeImage, dx + sw, dy, 0, 0, options.extrude, sh);
+
+                extrudeImage.resize(sw, 1);
+                extrudeImage.blit(img, 0, 0, sx, 0, sw, 1);
+                extrudeImage.resize(sw, options.extrude);
+                this.buffer.blit(extrudeImage, dx, dy - options.extrude, 0, 0, sw, options.extrude);
+
+                extrudeImage.resize(sw, 1);
+                extrudeImage.blit(img, 0, 0, sx, oh-1, sw, 1);
+                extrudeImage.resize(sw, options.extrude);
+                this.buffer.blit(extrudeImage, dx, dy + sh, 0, 0, sw, options.extrude);
             }
 
             this.buffer.blit(img, dx, dy, sx, sy, sw, sh);
-
-            if(options.extrude) {
-                img = img.clone();
-
-                let rw = sw + options.extrude*2;
-                let rh = sh + options.extrude*2;
-
-                img.resize(rw, rh);
-
-                for(let i=1; i<=options.extrude; i++) {
-                    this.buffer.blit(img, dx - options.extrude, dy - i, 0, 0, rw, 1);
-                    this.buffer.blit(img, dx - options.extrude, dy + sh + i - 1, 0, 0, rw, 1);
-                    this.buffer.blit(img, dx - i, dy - options.extrude, 0, 0, 1, rh);
-                    this.buffer.blit(img, dx + sw + i - 1, dy - options.extrude, 0, 0, 1, rh);
-                }
-            }
         }
     }
 }
