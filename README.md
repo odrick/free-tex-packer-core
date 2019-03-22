@@ -64,6 +64,7 @@ texturePacker(images, options, (files) => {
 * `width` - max single texture width. Default: **2048**
 * `height` - max single texture height. Default: **2048**
 * `fixedSize` - fix texture size. Default: **false**
+* `powerOfTwo` - force power of two textures sizes. Default: **false**
 * `padding` - spaces in pixels around images. Default: **0**
 * `extrude` - extrude border pixels size around images. Default: **0**
 * `allowRotation` - allow image rotation. Default: **true**

@@ -34,6 +34,7 @@ module.exports = function(images, options, cb) {
     options.textureName = options.textureName === undefined ? "pack-result" : options.textureName;
     options.width = options.width === undefined ? 2048 : options.width;
     options.height = options.height === undefined ? 2048 : options.height;
+    options.powerOfTwo = !!options.powerOfTwo;
     options.fixedSize = options.fixedSize === undefined ? false : options.fixedSize;
     options.padding = options.padding === undefined ? 0 : options.padding;
     options.extrude = options.extrude === undefined ? 0 : options.extrude;
