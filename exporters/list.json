@@ -72,6 +72,15 @@
     "predefined": true
   },
   {
+    "type": "Phaser3",
+    "description": "Phaser 3",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "Phaser3.mst",
+    "fileExt": "json",
+    "predefined": true
+  },
+  {
     "type": "Cocos2d",
     "description": "cocos2d format",
     "allowTrim": true,
