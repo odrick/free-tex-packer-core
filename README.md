@@ -80,7 +80,7 @@ texturePacker(images, options, (files) => {
 * `tinifyKey` - [TinyPNG key](https://tinypng.com/developers). Default: **""**
 * `packer` - type of packer (MaxRectsBin or MaxRectsPacker). Default: **MaxRectsBin**
 * `packerMethod` - name of pack method (MaxRectsBin: BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule, ContactPointRule. MaxRectsPacker: Smart, Square, SmartSquare). Default: **BestShortSideFit**
-* `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, XML, Starling, Cocos2d, Spine, Unreal, UIKit), or custom exporter (see below). Default: **JsonHash**
+* `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, Phaser3, XML, Starling, Cocos2d, Spine, Unreal, UIKit), or custom exporter (see below). Default: **JsonHash**
 * `filter` - name of bitmap filter (grayscale, mask or none). Default: **none**
 * `appInfo` - external app info. Required fields: url and version. Default: **null**
 
