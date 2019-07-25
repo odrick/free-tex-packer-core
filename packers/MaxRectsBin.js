@@ -462,6 +462,10 @@ class MaxRectsBin extends Packer {
         return "MaxRectsBin";
     }
 
+    static get defaultMethod() {
+        return METHOD.BestShortSideFit;
+    }
+
     static get methods() {
         return METHOD;
     }

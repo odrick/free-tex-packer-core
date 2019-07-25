@@ -42,6 +42,7 @@ module.exports = function(images, options, cb) {
     options.detectIdentical = options.detectIdentical === undefined ? true : options.detectIdentical;
     options.allowTrim = options.allowTrim === undefined ? true : options.allowTrim;
     options.trimMode = options.trimMode === undefined ? "trim" : options.trimMode;
+    options.alphaThreshold = options.alphaThreshold === undefined ? 0 : options.alphaThreshold;
     options.removeFileExtension = options.removeFileExtension === undefined ? false : options.removeFileExtension;
     options.prependFolderName = options.prependFolderName === undefined ? true : options.prependFolderName;
     options.textureFormat = options.textureFormat === undefined ? "png" : options.textureFormat;
@@ -51,13 +52,16 @@ module.exports = function(images, options, cb) {
     options.tinifyKey = options.tinifyKey === undefined ? "" : options.tinifyKey;
     options.filter = options.filter === undefined ? "none" : options.filter;
 
-    if(!options.packer) options.packer = "MaxRectsBin";
-    if(!options.packerMethod) options.packerMethod = "BestShortSideFit";
+    if(!options.packer) options.packer = "MaxRectsPacker";
     if(!options.exporter) options.exporter = "JsonHash";
 
     let packer = getPackerByType(options.packer);
     if(!packer) {
         throw new Error(getErrorDescription("Unknown packer " + options.packer));
+    }
+
+    if(!options.packerMethod) {
+        options.packerMethod = packer.defaultMethod;
     }
 
     let packerMethod = packer.getMethodByType(options.packerMethod);

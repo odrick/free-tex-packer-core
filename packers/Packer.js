@@ -16,6 +16,10 @@ class Packer {
         return "Default";
     }
 
+    static get defaultMethod() {
+        return METHOD.Default;
+    }
+
     static get methods() {
         return METHOD;
     }

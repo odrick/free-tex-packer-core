@@ -52,6 +52,10 @@ class MaxRectsPacker extends Packer {
         return "MaxRectsPacker";
     }
 
+    static get defaultMethod() {
+        return METHOD.Smart;
+    }
+
     static get methods() {
         return METHOD;
     }
