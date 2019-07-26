@@ -124,5 +124,14 @@
     "template": "UIKit.mst",
     "fileExt": "plist",
     "predefined": true
+  },
+  {
+    "type": "Unity3D",
+    "description": "Unity3D sprite sheet",
+    "allowTrim": true,
+    "allowRotation": false,
+    "template": "Unity3D.mst",
+    "fileExt": "tpsheet",
+    "predefined": true
   }
 ]

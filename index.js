@@ -52,7 +52,7 @@ module.exports = function(images, options, cb) {
     options.tinifyKey = options.tinifyKey === undefined ? "" : options.tinifyKey;
     options.filter = options.filter === undefined ? "none" : options.filter;
 
-    if(!options.packer) options.packer = "MaxRectsPacker";
+    if(!options.packer) options.packer = "MaxRectsBin";
     if(!options.exporter) options.exporter = "JsonHash";
 
     let packer = getPackerByType(options.packer);
