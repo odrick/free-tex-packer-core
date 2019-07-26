@@ -71,6 +71,7 @@ texturePacker(images, options, (files) => {
 * `detectIdentical` - allow detect identical images. Default: **true**
 * `allowTrim` - allow trim images. Default: **true**
 * `trimMode` - trim or crop. Default: **trim**
+* `alphaThreshold` - threshold alpha value. Default: **0**
 * `removeFileExtension` - remove file extensions from frame names. Default: **false**
 * `prependFolderName` - prepend folder name to frame names. Default: **true**
 * `textureFormat` - output file format (png or jpg). Default: **png**
@@ -80,7 +81,7 @@ texturePacker(images, options, (files) => {
 * `tinifyKey` - [TinyPNG key](https://tinypng.com/developers). Default: **""**
 * `packer` - type of packer (MaxRectsBin or MaxRectsPacker). Default: **MaxRectsBin**
 * `packerMethod` - name of pack method (MaxRectsBin: BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule, ContactPointRule. MaxRectsPacker: Smart, Square, SmartSquare). Default: **BestShortSideFit**
-* `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, Phaser3, XML, Starling, Cocos2d, Spine, Unreal, UIKit), or custom exporter (see below). Default: **JsonHash**
+* `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, Phaser3, XML, Starling, Cocos2d, Spine, Unreal, UIKit, Unity3D), or custom exporter (see below). Default: **JsonHash**
 * `filter` - name of bitmap filter (grayscale, mask or none). Default: **none**
 * `appInfo` - external app info. Required fields: url and version. Default: **null**
 
