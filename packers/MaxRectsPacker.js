@@ -21,8 +21,8 @@ class MaxRectsPacker extends Packer {
         let options = {
             smart: (method === METHOD.Smart || method === METHOD.SmartSquare),
             pot: false,
-			square: (method === METHOD.Square || method === METHOD.SmartSquare),
-			allowRotation: this.allowRotate
+            square: (method === METHOD.Square || method === METHOD.SmartSquare),
+            allowRotation: this.allowRotate
         };
 
         let packer = new MaxRectsPackerEngine(this.binWidth, this.binHeight, 0, options);
@@ -43,9 +43,9 @@ class MaxRectsPacker extends Packer {
         for(let item of rects) {
             item.data.frame.x = item.x;
             item.data.frame.y = item.y;
-			if (item.rot) {
-				item.data.rotated = true;
-			}
+            if (item.rot) {
+                item.data.rotated = true;
+            }
             res.push(item.data);
         }
         
