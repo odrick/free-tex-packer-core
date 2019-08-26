@@ -1,9 +1,11 @@
 let MaxRectsPacker = require("./MaxRectsPacker");
 let MaxRectsBin = require("./MaxRectsBin");
+let OptimalPacker = require("./OptimalPacker");
 
 const list = [
     MaxRectsBin,
-    MaxRectsPacker
+    MaxRectsPacker,
+    OptimalPacker
 ];
 
 function getPackerByType(type) {
