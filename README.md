@@ -16,13 +16,53 @@ images.push({path: "img1.png", contents: fs.readFileSync("./img1.png")});
 images.push({path: "img2.png", contents: fs.readFileSync("./img2.png")});
 images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 
-texturePacker(images, null, (files) => {
-    for(let item of files) {
-        console.log(item.name, item.buffer);
+texturePacker(images, null, (files, error) => {
+    if (error) {
+        console.error('Packaging failed', err);
+    } else {  
+        for(let item of files) {
+            console.log(item.name, item.buffer);
+        }
     }
 });
 
 ```
+
+## Asynchronous usage
+### Async/await
+```js
+const { packAsync } = require('free-tex-packer-core');
+
+const images = [
+    {path: "img1.png", contents: fs.readFileSync("./img1.png")},
+    {path: "img2.png", contents: fs.readFileSync("./img2.png")},
+    {path: "img3.png", contents: fs.readFileSync("./img3.png")}
+];
+
+async function packImages() {
+    try {
+        const files = await packAsync(images, null);
+        for(let item of files) {
+            console.log(item.name, item.buffer);
+        }
+    }
+    catch(err) {
+        console.log(error);
+    }
+}
+```
+### Promises
+```js
+function packImages() {
+    packAsync(images, null)
+        .then((files) => {
+            for(let item of files) {
+                console.log(item.name, item.buffer);
+            }
+        })
+        .catch((error) => console.log(error));
+}
+``` 
 
 # Advanced usage
 
@@ -51,9 +91,13 @@ images.push({path: "img1.png", contents: fs.readFileSync("./img1.png")});
 images.push({path: "img2.png", contents: fs.readFileSync("./img2.png")});
 images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 
-texturePacker(images, options, (files) => {
-    for(let item of files) {
-        console.log(item.name, item.buffer);
+texturePacker(images, options, (files, error) => {
+    if (error) {
+        console.error('Packaging failed', err);
+    } else {  
+        for(let item of files) {
+            console.log(item.name, item.buffer);
+        }
     }
 });
 ```
@@ -192,9 +236,13 @@ let exporter = {
     template: "./MyTemplate.mst"
 };
 
-texturePacker(images, {exporter: exporter}, (files) => {
-    for(let item of files) {
-        console.log(item.name, item.buffer);
+texturePacker(images, {exporter: exporter}, (files, error) => {
+    if (error) {
+        console.error('Packaging failed', err);
+    } else {  
+        for(let item of files) {
+            console.log(item.name, item.buffer);
+        }
     }
 });
 ```
