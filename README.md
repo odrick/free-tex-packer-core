@@ -18,7 +18,7 @@ images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 
 texturePacker(images, null, (files, error) => {
     if (error) {
-        console.error('Packaging failed', err);
+        console.error('Packaging failed', error);
     } else {  
         for(let item of files) {
             console.log(item.name, item.buffer);
@@ -46,7 +46,7 @@ async function packImages() {
             console.log(item.name, item.buffer);
         }
     }
-    catch(err) {
+    catch(error) {
         console.log(error);
     }
 }
@@ -93,7 +93,7 @@ images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 
 texturePacker(images, options, (files, error) => {
     if (error) {
-        console.error('Packaging failed', err);
+        console.error('Packaging failed', error);
     } else {  
         for(let item of files) {
             console.log(item.name, item.buffer);
@@ -238,7 +238,7 @@ let exporter = {
 
 texturePacker(images, {exporter: exporter}, (files, error) => {
     if (error) {
-        console.error('Packaging failed', err);
+        console.error('Packaging failed', error);
     } else {  
         for(let item of files) {
             console.log(item.name, item.buffer);
