@@ -174,12 +174,11 @@ class PackProcessor {
 
             // duplicate rects if more than 1 combo since the array is mutated in pack()
             let _rects = packerCombos.length > 1 ? rects.map(rect => {
-                return {
-                    ...rect,
-                    frame: {...rect.frame},
-                    spriteSourceSize: {...rect.spriteSourceSize},
-                    sourceSize: {...rect.sourceSize},
-                };
+                return Object.assign({}, rect, {
+                    frame: Object.assign({}, rect.frame),
+                    spriteSourceSize: Object.assign({}, rect.spriteSourceSize),
+                    sourceSize: Object.assign({}, rect.sourceSize)
+                });
             }) : rects;
 
             // duplicate identical if more than 1 combo and fix references to point to the
@@ -187,10 +186,7 @@ class PackProcessor {
             let _identical = packerCombos.length > 1 ? identical.map(rect => {
                 for (let rect2 of _rects) {
                     if (rect.identical.image._base64 == rect2.image._base64) {
-                        return {
-                            ...rect,
-                            identical: rect2
-                        };
+                        return Object.assign({}, rect, { identical: rect2 });
                     }
                 }
             }) : identical;
