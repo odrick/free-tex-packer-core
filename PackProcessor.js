@@ -73,7 +73,7 @@ class PackProcessor {
         let alphaThreshold = options.alphaThreshold || 0;
         if(alphaThreshold > 255) alphaThreshold = 255;
 
-        let names = Object.keys(images);
+        let names = Object.keys(images).sort();
         
         for(let key of names) {
             let img = images[key];
