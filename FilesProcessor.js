@@ -69,7 +69,7 @@ class FilesProcessor {
                 
                 files.push({
                     name: fName + "." + options.exporter.fileExt,
-                    buffer: new Buffer(startExporter(options.exporter, item.data, opts))
+                    buffer: Buffer.from(startExporter(options.exporter, item.data, opts))
                 });
 
                 if(!options.base64Export) {
