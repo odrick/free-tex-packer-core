@@ -27,10 +27,10 @@ function loadImage(file, files) {
 		});
 }
 
-module.exports = function(images, options, cb) {
-	options = options || {};
+function packAsync(images, options) {
+    options = options || {};
     options = Object.assign({}, options);
-    
+
     options.textureName = options.textureName === undefined ? "pack-result" : options.textureName;
     options.width = options.width === undefined ? 2048 : options.width;
     options.height = options.height === undefined ? 2048 : options.height;
@@ -76,14 +76,14 @@ module.exports = function(images, options, cb) {
     else {
         exporter = options.exporter;
     }
-	
+
 	if(!exporter.allowRotation) options.allowRotation = false;
 	if(!exporter.allowTrim) options.allowTrim = false;
-    
+
     if(!exporter) {
         throw new Error(getErrorDescription("Unknown exporter " + options.exporter));
     }
-    
+
     let filter = getFilterByType(options.filter);
     if(!filter) {
         throw new Error(getErrorDescription("Unknown filter " + options.filter));
@@ -93,21 +93,31 @@ module.exports = function(images, options, cb) {
     options.packerMethod = packerMethod;
     options.exporter = exporter;
     options.filter = filter;
-	
+
 	let files = {};
 	let p = [];
-	
+
 	for(let file of images) {
 		p.push(loadImage(file, files));
 	}
-	
-	Promise.all(p).then(() => {
-		FilesProcessor.start(files, options, 
-			(res) => {
-				if(cb) cb(res);
-			},
-			(error) => {
-				console.error(getErrorDescription(error.description));
-			});
-	});
-};
+
+    return new Promise((resolve, reject) =>
+        Promise.all(p)
+            .then(() => {
+                FilesProcessor.start(files, options,
+                    (res) => resolve(res),
+                    (error) => reject(error)
+                )
+            })
+            .catch((error) => reject(error))
+    );
+}
+
+function pack(images, options, cb) {
+    packAsync(images, options)
+        .then((result) => cb(result))
+        .catch((error) => cb(undefined, error));
+}
+
+module.exports = pack;
+module.exports.packAsync = packAsync;
