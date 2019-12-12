@@ -123,7 +123,7 @@ texturePacker(images, options, (files, error) => {
 * `scale` - scale size and positions in atlas. Default: **1**
 * `tinify` - tinify texture using [TinyPNG](https://tinypng.com/). Default: **false**
 * `tinifyKey` - [TinyPNG key](https://tinypng.com/developers). Default: **""**
-* `packer` - type of packer (MaxRectsBin or MaxRectsPacker). Default: **MaxRectsBin**
+* `packer` - type of packer (MaxRectsBin, MaxRectsPacker or OptimalPacker). Default: **MaxRectsBin**
 * `packerMethod` - name of pack method (MaxRectsBin: BestShortSideFit, BestLongSideFit, BestAreaFit, BottomLeftRule, ContactPointRule. MaxRectsPacker: Smart, Square, SmartSquare). Default: **BestShortSideFit**
 * `exporter` - name of predefined exporter (JsonHash, JsonArray, Css, OldCss, Pixi, PhaserHash, PhaserArray, Phaser3, XML, Starling, Cocos2d, Spine, Unreal, UIKit, Unity3D), or custom exporter (see below). Default: **JsonHash**
 * `filter` - name of bitmap filter (grayscale, mask or none). Default: **none**
