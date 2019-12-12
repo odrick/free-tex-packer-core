@@ -1,5 +1,8 @@
 let MaxRectsBinPack = require('./packers/MaxRectsBin');
+let OptimalPacker = require('./packers/OptimalPacker');
+let allPackers = require('./packers').list;
 let Trimmer = require('./utils/Trimmer');
+let TextureRenderer = require('./utils/TextureRenderer');
 
 class PackProcessor {
 
@@ -140,35 +143,91 @@ class PackProcessor {
             identical = res.identical;
         }
 
+        let getAllPackers = () => {
+            let methods = [];
+            for (let packerClass of allPackers) {
+                if (packerClass !== OptimalPacker) {
+                    for (let method in packerClass.methods) {
+                        methods.push({ packerClass, packerMethod: packerClass.methods[method] });
+                    }
+                }
+            }
+            return methods;
+        };
+
         let packerClass = options.packer || MaxRectsBinPack;
         let packerMethod = options.packerMethod || MaxRectsBinPack.methods.BestShortSideFit;
+        let packerCombos = (packerClass === OptimalPacker) ? getAllPackers() : [{ packerClass, packerMethod }];
 
-        let res = [];
+        let optimalRes;
+        let optimalSheets = Infinity;
+        let optimalEfficiency = 0;
 
-        while(rects.length) {
-            let packer = new packerClass(width, height, options.allowRotation);
-            let result = packer.pack(rects, packerMethod);
+        let sourceArea = 0;
+        for (let rect of rects) {
+            sourceArea += rect.sourceSize.w * rect.sourceSize.h;
+        }
 
-            for(let item of result) {
-                item.frame.x += padding + extrude;
-                item.frame.y += padding + extrude;
-                item.frame.w -= padding*2 + extrude*2;
-                item.frame.h -= padding*2 + extrude*2;
+        for (let combo of packerCombos) {
+            let res = [];
+            let sheetArea = 0;
+
+            // duplicate rects if more than 1 combo since the array is mutated in pack()
+            let _rects = packerCombos.length > 1 ? rects.map(rect => {
+                return Object.assign({}, rect, {
+                    frame: Object.assign({}, rect.frame),
+                    spriteSourceSize: Object.assign({}, rect.spriteSourceSize),
+                    sourceSize: Object.assign({}, rect.sourceSize)
+                });
+            }) : rects;
+
+            // duplicate identical if more than 1 combo and fix references to point to the
+            //  cloned rects since the array is mutated in applyIdentical()
+            let _identical = packerCombos.length > 1 ? identical.map(rect => {
+                for (let rect2 of _rects) {
+                    if (rect.identical.image._base64 == rect2.image._base64) {
+                        return Object.assign({}, rect, { identical: rect2 });
+                    }
+                }
+            }) : identical;
+
+            while(_rects.length) {
+                let packer = new combo.packerClass(width, height, options.allowRotation);
+                let result = packer.pack(_rects, combo.packerMethod);
+
+                for(let item of result) {
+                    item.frame.x += padding + extrude;
+                    item.frame.y += padding + extrude;
+                    item.frame.w -= padding*2 + extrude*2;
+                    item.frame.h -= padding*2 + extrude*2;
+                }
+
+                if(options.detectIdentical) {
+                    result = PackProcessor.applyIdentical(result, _identical);
+                }
+
+                res.push(result);
+
+                for(let item of result) {
+                    this.removeRect(_rects, item.name);
+                }
+
+                let { width: sheetWidth, height: sheetHeight } = TextureRenderer.getSize(result, options);
+                sheetArea += sheetWidth * sheetHeight;
             }
 
-            if(options.detectIdentical) {
-                result = PackProcessor.applyIdentical(result, identical);
-            }
+            let sheets = res.length;
+            let efficiency = sourceArea / sheetArea;
 
-            res.push(result);
-
-            for(let item of result) {
-                this.removeRect(rects, item.name);
+            if (sheets < optimalSheets || (sheets === optimalSheets && efficiency > optimalEfficiency)) {
+                optimalRes = res;
+                optimalSheets = sheets;
+                optimalEfficiency = efficiency;
             }
         }
 
         if(onComplete) {
-            onComplete(res);
+            onComplete(optimalRes);
         }
     }
 
