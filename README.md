@@ -119,8 +119,9 @@ texturePacker(images, options, (files, error) => {
 * `removeFileExtension` - remove file extensions from frame names. Default: **false**
 * `prependFolderName` - prepend folder name to frame names. Default: **true**
 * `textureFormat` - output file format (png or jpg). Default: **png**
-* `base64Export` - export texure as base64 string to atlas meta tag. Default: **false**
+* `base64Export` - export texture as base64 string to atlas meta tag. Default: **false**
 * `scale` - scale size and positions in atlas. Default: **1**
+* `scaleMethod` - texture scaling method (BILINEAR, NEAREST_NEIGHBOR, BICUBIC, HERMITE, BEZIER). Default: **BILINEAR**
 * `tinify` - tinify texture using [TinyPNG](https://tinypng.com/). Default: **false**
 * `tinifyKey` - [TinyPNG key](https://tinypng.com/developers). Default: **""**
 * `packer` - type of packer (MaxRectsBin, MaxRectsPacker or OptimalPacker). Default: **MaxRectsBin**, recommended **OptimalPacker**

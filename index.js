@@ -48,6 +48,7 @@ function packAsync(images, options) {
     options.textureFormat = options.textureFormat === undefined ? "png" : options.textureFormat;
     options.base64Export = options.base64Export === undefined ? false : options.base64Export;
     options.scale = options.scale === undefined ? 1 : options.scale;
+    options.scale = options.scaleMethod === undefined ? "BILINEAR" : options.scaleMethod;
     options.tinify = options.tinify === undefined ? false : options.tinify;
     options.tinifyKey = options.tinifyKey === undefined ? "" : options.tinifyKey;
     options.filter = options.filter === undefined ? "none" : options.filter;

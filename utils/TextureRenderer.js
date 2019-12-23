@@ -79,6 +79,17 @@ class TextureRenderer {
             let filter = new options.filter();
             filter.apply(image);
 
+            if(options.scale && options.scale !== 1) {
+                let scaleMethod = Jimp.RESIZE_BILINEAR;
+
+                if(options.scaleMethod === "NEAREST_NEIGHBOR") scaleMethod = Jimp.RESIZE_NEAREST_NEIGHBOR;
+                if(options.scaleMethod === "BICUBIC") scaleMethod = Jimp.RESIZE_BICUBIC;
+                if(options.scaleMethod === "HERMITE") scaleMethod = Jimp.RESIZE_HERMITE;
+                if(options.scaleMethod === "BEZIER") scaleMethod = Jimp.RESIZE_BEZIER;
+
+                image.resize(Math.round(width * options.scale) || 1, Math.round(height * options.scale) || 1, scaleMethod);
+            }
+
             if(this.callback) this.callback(this);
         });
     }
