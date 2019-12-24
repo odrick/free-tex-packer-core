@@ -5,6 +5,7 @@
   "description": "Free texture packer core",
   "url": "http://github.com/odrick/free-tex-packer-core",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {},
   "keywords": [
     "texture",
