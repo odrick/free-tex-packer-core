@@ -32,5 +32,8 @@
     "maxrects-packer": "^2.5.0",
     "mustache": "^2.3.0",
     "tinify": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.0"
   }
 }
