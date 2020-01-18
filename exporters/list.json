@@ -54,6 +54,24 @@
     "predefined": true
   },
   {
+    "type": "GodotAtlas",
+    "description": "Godot Atlas format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "GodotAtlas.mst",
+    "fileExt": "tpsheet",
+    "predefined": true
+  },
+  {
+    "type": "GodotTileset",
+    "description": "Godot Tileset format",
+    "allowTrim": true,
+    "allowRotation": true,
+    "template": "GodotTileset.mst",
+    "fileExt": "tpset",
+    "predefined": true
+  },
+  {
     "type": "PhaserHash",
     "description": "Phaser (json hash)",
     "allowTrim": true,
