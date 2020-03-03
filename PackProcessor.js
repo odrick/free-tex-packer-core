@@ -148,7 +148,8 @@ class PackProcessor {
             for (let packerClass of allPackers) {
                 if (packerClass !== OptimalPacker) {
                     for (let method in packerClass.methods) {
-                        methods.push({ packerClass, packerMethod: packerClass.methods[method] });
+                        methods.push({packerClass, packerMethod: packerClass.methods[method], allowRotation: false});
+                        methods.push({packerClass, packerMethod: packerClass.methods[method], allowRotation: true});
                     }
                 }
             }
@@ -157,7 +158,7 @@ class PackProcessor {
 
         let packerClass = options.packer || MaxRectsBinPack;
         let packerMethod = options.packerMethod || MaxRectsBinPack.methods.BestShortSideFit;
-        let packerCombos = (packerClass === OptimalPacker) ? getAllPackers() : [{ packerClass, packerMethod }];
+        let packerCombos = (packerClass === OptimalPacker) ? getAllPackers() : [{packerClass, packerMethod, allowRotation: options.allowRotation}];
 
         let optimalRes;
         let optimalSheets = Infinity;
@@ -192,7 +193,7 @@ class PackProcessor {
             }) : identical;
 
             while(_rects.length) {
-                let packer = new combo.packerClass(width, height, options.allowRotation);
+                let packer = new combo.packerClass(width, height, combo.allowRotation);
                 let result = packer.pack(_rects, combo.packerMethod);
 
                 for(let item of result) {
