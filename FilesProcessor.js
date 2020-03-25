@@ -21,9 +21,17 @@ class FilesProcessor {
                         });
 
                         if(packResult.length >= res.length) {
+
+                            //if this is a multipack
+                            if (packResult.length > 1)
+                            {
+                                //make an array with all the files generated with the corresponding extension
+                                options.relatedMultiPacks = packResult.map(_item, index => options.textureName + (!options.omitZeroIndex || index > 0 ? "-" + index : "") + "." + options.exporter.fileExt); 
+                            }
+
                             let ix = 0;
                             for(let item of packResult) {
-                                let fName = options.textureName + (packResult.length > 1 ? "-" + ix : "");
+                                let fName = options.textureName + (packResult.length > 1  && (!options.omitZeroIndex || ix > 0) ? "-" + ix : "");
 
                                 FilesProcessor.processPackResultItem(fName, item, options, (files) => {
                                     resFiles = resFiles.concat(files);
@@ -64,7 +72,8 @@ class FilesProcessor {
                     base64Export: options.base64Export,
                     scale: options.scale,
                     appInfo: options.appInfo,
-                    trimMode: options.trimMode
+                    trimMode: options.trimMode,
+                    relatedMultiPacks: options.relatedMultiPacks.filter(filename=>filename.indexOf(fName + "." + options.exporter.fileExt) === -1) //a file doesn't contain itself in the multipack array
                 };
                 
                 files.push({

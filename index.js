@@ -52,6 +52,7 @@ function packAsync(images, options) {
     options.tinify = options.tinify === undefined ? false : options.tinify;
     options.tinifyKey = options.tinifyKey === undefined ? "" : options.tinifyKey;
     options.filter = options.filter === undefined ? "none" : options.filter;
+    options.omitZeroIndex = options.omitZeroIndex === undefined ? false : options.omitZeroIndex;
 
     if(!options.packer) options.packer = "MaxRectsBin";
     if(!options.exporter) options.exporter = "JsonHash";
