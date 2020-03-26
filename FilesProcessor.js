@@ -23,10 +23,13 @@ class FilesProcessor {
                         if(packResult.length >= res.length) {
 
                             //if this is a multipack
-                            if (packResult.length > 1)
-                            {
+                            if (packResult.length > 1) {
                                 //make an array with all the files generated with the corresponding extension
-                                options.relatedMultiPacks = packResult.map(_item, index => options.textureName + (!options.omitZeroIndex || index > 0 ? "-" + index : "") + "." + options.exporter.fileExt); 
+                                options.relatedMultiPacks = packResult.map((_item, index) => ({name:options.textureName + (!options.omitZeroIndex || index > 0 ? "-" + index : "") + "." + options.exporter.fileExt}));
+                            }
+                            else {
+                                //without this I crash when I try to filter out the result
+                                options.relatedMultiPacks = [];
                             }
 
                             let ix = 0;
@@ -73,7 +76,7 @@ class FilesProcessor {
                     scale: options.scale,
                     appInfo: options.appInfo,
                     trimMode: options.trimMode,
-                    relatedMultiPacks: options.relatedMultiPacks.filter(filename=>filename.indexOf(fName + "." + options.exporter.fileExt) === -1) //a file doesn't contain itself in the multipack array
+                    relatedMultiPacks: options.relatedMultiPacks.filter(fileObj => fileObj.name.indexOf(fName + "." + options.exporter.fileExt) === -1) //a file doesn't contain itself in the multipack array
                 };
                 
                 files.push({

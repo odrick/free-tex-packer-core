@@ -130,6 +130,12 @@ function prepareData(data, options) {
         ret[ret.length-1].last = true;
     }
 
+    if(opt.relatedMultiPacks.length) {
+        opt.relatedMultiPacks[0].first = true;
+        opt.relatedMultiPacks[opt.relatedMultiPacks.length-1].last = true;
+        opt.isMultiPack = true;
+    }
+
     return {rects: ret, config: opt};
 }
 
