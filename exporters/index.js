@@ -131,8 +131,10 @@ function prepareData(data, options) {
     }
 
     if(opt.relatedMultiPacks.length) {
-        opt.relatedMultiPacks[0].first = true;
-        opt.relatedMultiPacks[opt.relatedMultiPacks.length-1].last = true;
+        for (let i = 0; i < opt.relatedMultiPacks.length; i++) {
+            opt.relatedMultiPacks[i].first = i == 0;
+            opt.relatedMultiPacks[i].last = i == opt.relatedMultiPacks.length - 1;
+        }
         opt.isMultiPack = true;
     }
 
