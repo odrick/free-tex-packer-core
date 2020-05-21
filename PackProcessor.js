@@ -14,9 +14,26 @@ class PackProcessor {
             let rect1 = rects[i];
             for(let n=i+1; n<rects.length; n++) {
                 let rect2 = rects[n];
-                if(rect1.image._base64 == rect2.image._base64 && identical.indexOf(rect2) < 0) {
-                    rect2.identical = rect1;
-                    identical.push(rect2);
+                let ss1 = rect1.spriteSourceSize;
+                let ss2 = rect2.spriteSourceSize;
+                if ((ss1.w == ss2.w) && (ss1.h == ss2.h) && (identical.indexOf(rect2) < 0)) {
+                    let equal = true;
+                    let d1 = rect1.image.bitmap.data;
+                    let d2 = rect2.image.bitmap.data;
+                    for (let y = 0; y < ss1.h; y += 1) {
+                        let p1 = rect1.image.getPixelIndex(ss1.x, ss1.y + y);
+                        let p2 = rect2.image.getPixelIndex(ss2.x, ss2.y + y);
+                        for (let x = 0; x < (ss1.w * 4); x += 1) {
+                            if (d1[p1 + x] != d2[p2 + x]) {
+                                equal = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (equal) {
+                        rect2.identical = rect1;
+                        identical.push(rect2);
+                    }
                 }
             }
         }
@@ -44,6 +61,7 @@ class PackProcessor {
                 
                 clone.name = item.name;
                 clone.image = item.image;
+                clone.spriteSourceSize = item.spriteSourceSize;
                 clone.skipRender = true;
 
                 removeIdentical.push(item);
