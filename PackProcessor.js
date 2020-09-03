@@ -98,8 +98,8 @@ class PackProcessor {
             });
         }
 
-        let width = options.width || 0;
-        let height = options.height || 0;
+        let width = options.width / options.scale || 0;
+        let height = options.height / options.scale|| 0;
 
         if(!width) width = maxWidth;
         if(!height) height = maxHeight;
