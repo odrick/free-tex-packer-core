@@ -105,6 +105,8 @@ texturePacker(images, options, (files, error) => {
 # Available options
 
 * `textureName` - name of output files. Default: **pack-result**
+* `suffix` - the suffix used for multiple sprites. Default: **-**
+* `suffixInitialValue` - the initial value of the suffix. Default: **0**
 * `width` - max single texture width. Default: **2048**
 * `height` - max single texture height. Default: **2048**
 * `fixedSize` - fix texture size. Default: **false**

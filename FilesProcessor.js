@@ -21,9 +21,10 @@ class FilesProcessor {
                         });
 
                         if(packResult.length >= res.length) {
-                            let ix = 0;
+                            const suffix = options.suffix;
+                            let ix = options.suffixInitialValue;
                             for(let item of packResult) {
-                                let fName = options.textureName + (packResult.length > 1 ? "-" + ix : "");
+                                let fName = options.textureName + (packResult.length > 1 ? suffix + ix : "");
 
                                 FilesProcessor.processPackResultItem(fName, item, options, (files) => {
                                     resFiles = resFiles.concat(files);

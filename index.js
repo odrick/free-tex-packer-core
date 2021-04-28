@@ -32,6 +32,8 @@ function packAsync(images, options) {
     options = Object.assign({}, options);
 
     options.textureName = options.textureName === undefined ? "pack-result" : options.textureName;
+    options.suffix = options.suffix === undefined ? "-" : options.suffix;
+    options.suffixInitialValue = options.suffixInitialValue === undefined ? 0 : options.suffixInitialValue;
     options.width = options.width === undefined ? 2048 : options.width;
     options.height = options.height === undefined ? 2048 : options.height;
     options.powerOfTwo = !!options.powerOfTwo;
