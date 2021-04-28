@@ -151,5 +151,14 @@
     "template": "Unity3D.mst",
     "fileExt": "tpsheet",
     "predefined": true
+  },
+  {
+    "type": "Egret2D",
+    "description": "Egret2D sprite sheet",
+    "allowTrim": false,
+    "allowRotation": false,
+    "template": "Egret2D.mst",
+    "fileExt": "json",
+    "predefined": true
   }
 ]
