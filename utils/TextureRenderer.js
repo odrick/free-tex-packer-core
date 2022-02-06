@@ -4,14 +4,18 @@ class TextureRenderer {
     
     constructor(data, options={}, callback) {
         this.buffer = null;
+        this.extrudeBuffer = null;
         this.data = data;
 
         this.callback = callback;
 
         this.width = 0;
         this.height = 0;
-        
-        this.render(data, options);
+
+        new Jimp(1, 1, 0x0, (err, image) => {
+          this.extrudeBuffer = image;
+          this.render(data, options);
+        });
     }
 
     static getSize(data, options={}) {
@@ -110,7 +114,7 @@ class TextureRenderer {
 
             if (item.rotated) {
                 img = img.clone();
-                img.rotate(90);
+                img.rotate(-90);
 
                 sx = item.sourceSize.h - item.spriteSourceSize.h - item.spriteSourceSize.y;
                 sy = item.spriteSourceSize.x;
@@ -121,53 +125,56 @@ class TextureRenderer {
             }
 
             if(options.extrude) {
-                let extrudeImage = img.clone();
-
                 //Render corners
-                extrudeImage.resize(1, 1);
-                extrudeImage.blit(img, 0, 0, 0, 0, 1, 1);
-                extrudeImage.resize(options.extrude, options.extrude);
-                this.buffer.blit(extrudeImage, dx - options.extrude, dy - options.extrude, 0, 0, options.extrude, options.extrude);
+                this.prepareExtrudeBuffer(1, 1);
+                this.extrudeBuffer.blit(img, 0, 0, 0, 0, 1, 1);
+                this.extrudeBuffer.resize(options.extrude, options.extrude);
+                this.buffer.blit(this.extrudeBuffer, dx - options.extrude, dy - options.extrude, 0, 0, options.extrude, options.extrude);
 
-                extrudeImage.resize(1, 1);
-                extrudeImage.blit(img, 0, 0, ow-1, 0, 1, 1);
-                extrudeImage.resize(options.extrude, options.extrude);
-                this.buffer.blit(extrudeImage, dx + sw, dy - options.extrude, 0, 0, options.extrude, options.extrude);
+                this.prepareExtrudeBuffer(1, 1);
+                this.extrudeBuffer.blit(img, 0, 0, ow-1, 0, 1, 1);
+                this.extrudeBuffer.resize(options.extrude, options.extrude);
+                this.buffer.blit(this.extrudeBuffer, dx + sw, dy - options.extrude, 0, 0, options.extrude, options.extrude);
 
-                extrudeImage.resize(1, 1);
-                extrudeImage.blit(img, 0, 0, 0, oh-1, 1, 1);
-                extrudeImage.resize(options.extrude, options.extrude);
-                this.buffer.blit(extrudeImage, dx - options.extrude, dy + sh, 0, 0, options.extrude, options.extrude);
+                this.prepareExtrudeBuffer(1, 1);
+                this.extrudeBuffer.blit(img, 0, 0, 0, oh-1, 1, 1);
+                this.extrudeBuffer.resize(options.extrude, options.extrude);
+                this.buffer.blit(this.extrudeBuffer, dx - options.extrude, dy + sh, 0, 0, options.extrude, options.extrude);
 
-                extrudeImage.resize(1, 1);
-                extrudeImage.blit(img, 0, 0, ow-1, oh-1, 1, 1);
-                extrudeImage.resize(options.extrude, options.extrude);
-                this.buffer.blit(extrudeImage, dx + sw, dy + sh, 0, 0, options.extrude, options.extrude);
+                this.prepareExtrudeBuffer(1, 1);
+                this.extrudeBuffer.blit(img, 0, 0, ow-1, oh-1, 1, 1);
+                this.extrudeBuffer.resize(options.extrude, options.extrude);
+                this.buffer.blit(this.extrudeBuffer, dx + sw, dy + sh, 0, 0, options.extrude, options.extrude);
 
                 //Render borders
-                extrudeImage.resize(1, sh);
-                extrudeImage.blit(img, 0, 0, 0, sy, 1, sh);
-                extrudeImage.resize(options.extrude, sh);
-                this.buffer.blit(extrudeImage, dx - options.extrude, dy, 0, 0, options.extrude, sh);
+                this.prepareExtrudeBuffer(1, sh);
+                this.extrudeBuffer.blit(img, 0, 0, 0, sy, 1, sh);
+                this.extrudeBuffer.resize(options.extrude, sh);
+                this.buffer.blit(this.extrudeBuffer, dx - options.extrude, dy, 0, 0, options.extrude, sh);
 
-                extrudeImage.resize(1, sh);
-                extrudeImage.blit(img, 0, 0, ow-1, sy, 1, sh);
-                extrudeImage.resize(options.extrude, sh);
-                this.buffer.blit(extrudeImage, dx + sw, dy, 0, 0, options.extrude, sh);
+                this.prepareExtrudeBuffer(1, sh);
+                this.extrudeBuffer.blit(img, 0, 0, ow-1, sy, 1, sh);
+                this.extrudeBuffer.resize(options.extrude, sh);
+                this.buffer.blit(this.extrudeBuffer, dx + sw, dy, 0, 0, options.extrude, sh);
 
-                extrudeImage.resize(sw, 1);
-                extrudeImage.blit(img, 0, 0, sx, 0, sw, 1);
-                extrudeImage.resize(sw, options.extrude);
-                this.buffer.blit(extrudeImage, dx, dy - options.extrude, 0, 0, sw, options.extrude);
+                this.prepareExtrudeBuffer(sw, 1);
+                this.extrudeBuffer.blit(img, 0, 0, sx, 0, sw, 1);
+                this.extrudeBuffer.resize(sw, options.extrude);
+                this.buffer.blit(this.extrudeBuffer, dx, dy - options.extrude, 0, 0, sw, options.extrude);
 
-                extrudeImage.resize(sw, 1);
-                extrudeImage.blit(img, 0, 0, sx, oh-1, sw, 1);
-                extrudeImage.resize(sw, options.extrude);
-                this.buffer.blit(extrudeImage, dx, dy + sh, 0, 0, sw, options.extrude);
+                this.prepareExtrudeBuffer(sw, 1);
+                this.extrudeBuffer.blit(img, 0, 0, sx, oh-1, sw, 1);
+                this.extrudeBuffer.resize(sw, options.extrude);
+                this.buffer.blit(this.extrudeBuffer, dx, dy + sh, 0, 0, sw, options.extrude);
             }
 
             this.buffer.blit(img, dx, dy, sx, sy, sw, sh);
         }
+    }
+
+    prepareExtrudeBuffer(width, height) {
+      this.extrudeBuffer.resize(width, height);
+      this.extrudeBuffer.bitmap.data.fill(0);
     }
 }
 
