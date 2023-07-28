@@ -3,9 +3,9 @@
 Core Free texture packer module
 
 # Install
-   
+
 $ npm install free-tex-packer-core
-   
+
 # Basic usage
 ```js
 let texturePacker = require("free-tex-packer-core");
@@ -19,7 +19,7 @@ images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 texturePacker(images, null, (files, error) => {
     if (error) {
         console.error('Packaging failed', error);
-    } else {  
+    } else {
         for(let item of files) {
             console.log(item.name, item.buffer);
         }
@@ -62,7 +62,7 @@ function packImages() {
         })
         .catch((error) => console.log(error));
 }
-``` 
+```
 
 # Advanced usage
 
@@ -82,6 +82,7 @@ let options = {
     allowTrim: true,
     exporter: "Pixi",
     removeFileExtension: true,
+    suffixFileName: "-suffix",
     prependFolderName: true
 };
 
@@ -94,7 +95,7 @@ images.push({path: "img3.png", contents: fs.readFileSync("./img3.png")});
 texturePacker(images, options, (files, error) => {
     if (error) {
         console.error('Packaging failed', error);
-    } else {  
+    } else {
         for(let item of files) {
             console.log(item.name, item.buffer);
         }
@@ -119,6 +120,7 @@ texturePacker(images, options, (files, error) => {
 * `trimMode` - trim or crop. Default: **trim**
 * `alphaThreshold` - threshold alpha value. Default: **0**
 * `removeFileExtension` - remove file extensions from frame names. Default: **false**
+* `suffixFileName` - add suffix to frame names. Default: **""**
 * `prependFolderName` - prepend folder name to frame names. Default: **true**
 * `textureFormat` - output file format (png or jpg). Default: **png**
 * `base64Export` - export texture as base64 string to atlas meta tag. Default: **false**
@@ -242,7 +244,7 @@ let exporter = {
 texturePacker(images, {exporter: exporter}, (files, error) => {
     if (error) {
         console.error('Packaging failed', error);
-    } else {  
+    } else {
         for(let item of files) {
             console.log(item.name, item.buffer);
         }

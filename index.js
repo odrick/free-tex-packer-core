@@ -46,6 +46,7 @@ function packAsync(images, options) {
     options.trimMode = options.trimMode === undefined ? "trim" : options.trimMode;
     options.alphaThreshold = options.alphaThreshold === undefined ? 0 : options.alphaThreshold;
     options.removeFileExtension = options.removeFileExtension === undefined ? false : options.removeFileExtension;
+    options.suffixFileName = options.suffixFileName === undefined ? "" : options.suffixFileName;
     options.prependFolderName = options.prependFolderName === undefined ? true : options.prependFolderName;
     options.textureFormat = options.textureFormat === undefined ? "png" : options.textureFormat;
     options.base64Export = options.base64Export === undefined ? false : options.base64Export;

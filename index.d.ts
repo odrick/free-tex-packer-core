@@ -210,6 +210,12 @@ export interface TexturePackerOptions {
    */
   removeFileExtension?: boolean;
   /**
+   * Add suffix to frame names
+   *
+   * @default empty string
+   */
+  suffixFileName?: string;
+  /**
    * Prepend folder name to frame names
    *
    * @default true

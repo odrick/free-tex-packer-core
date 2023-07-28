@@ -5,7 +5,7 @@ let tinify = require("tinify");
 let startExporter = require("./exporters/index").startExporter;
 
 class FilesProcessor {
-    
+
     static start(images, options, callback, errorCallback) {
         PackProcessor.pack(images, options,
             (res) => {
@@ -44,7 +44,7 @@ class FilesProcessor {
                 if(errorCallback) errorCallback(error);
             });
     }
-    
+
     static processPackResultItem(fName, item, options, callback) {
         let files = [];
 
@@ -61,13 +61,14 @@ class FilesProcessor {
                     imageWidth: item.buffer.bitmap.width,
                     imageHeight: item.buffer.bitmap.height,
                     removeFileExtension: options.removeFileExtension,
+                    suffixFileName: options.suffixFileName,
                     prependFolderName: options.prependFolderName,
                     base64Export: options.base64Export,
                     scale: options.scale,
                     appInfo: options.appInfo,
                     trimMode: options.trimMode
                 };
-                
+
                 files.push({
                     name: fName + "." + options.exporter.fileExt,
                     buffer: Buffer.from(startExporter(options.exporter, item.data, opts))
@@ -84,7 +85,7 @@ class FilesProcessor {
             });
         });
     }
-    
+
     static tinifyImage(buffer, options, callback) {
         if(!options.tinify) {
             callback(buffer);

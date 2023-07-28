@@ -83,6 +83,10 @@ function prepareData(data, options) {
 			name = name.split("/").pop();
 		}
 
+		if (options.suffixFileName) {
+			name = name + options.suffixFileName;
+		}
+
 		let frame = {
 			x: item.frame.x,
 			y: item.frame.y,
