@@ -82,7 +82,7 @@ let options = {
     allowTrim: true,
     exporter: "Pixi",
     removeFileExtension: true,
-    suffixFileName: "-suffix",
+    fileNamePrefix: "-prefix",
     prependFolderName: true
 };
 
@@ -120,7 +120,7 @@ texturePacker(images, options, (files, error) => {
 * `trimMode` - trim or crop. Default: **trim**
 * `alphaThreshold` - threshold alpha value. Default: **0**
 * `removeFileExtension` - remove file extensions from frame names. Default: **false**
-* `suffixFileName` - add suffix to frame names. Default: **""**
+* `fileNamePrefix` - add prefix to frame names. Default: **""**
 * `prependFolderName` - prepend folder name to frame names. Default: **true**
 * `textureFormat` - output file format (png or jpg). Default: **png**
 * `base64Export` - export texture as base64 string to atlas meta tag. Default: **false**

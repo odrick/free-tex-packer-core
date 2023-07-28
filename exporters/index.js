@@ -73,9 +73,9 @@ function prepareData(data, options) {
 			name.trim();
 		}
 
-		if (options.suffixFileName) {
+		if (options.fileNamePrefix) {
 			let parts = name.split(".");
-			name = parts[0] + options.suffixFileName + "." + parts[1];
+			name = parts[0] + options.fileNamePrefix + "." + parts[1];
 		}
 
 		if (options.removeFileExtension) {

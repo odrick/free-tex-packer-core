@@ -61,7 +61,7 @@ class FilesProcessor {
                     imageWidth: item.buffer.bitmap.width,
                     imageHeight: item.buffer.bitmap.height,
                     removeFileExtension: options.removeFileExtension,
-                    suffixFileName: options.suffixFileName,
+                    fileNamePrefix: options.fileNamePrefix,
                     prependFolderName: options.prependFolderName,
                     base64Export: options.base64Export,
                     scale: options.scale,
