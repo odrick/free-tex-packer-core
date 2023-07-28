@@ -73,6 +73,11 @@ function prepareData(data, options) {
 			name.trim();
 		}
 
+		if (options.suffixFileName) {
+			let parts = name.split(".");
+			name = parts[0] + options.suffixFileName + "." + parts[1];
+		}
+
 		if (options.removeFileExtension) {
 			let parts = name.split(".");
 			parts.pop();
@@ -81,10 +86,6 @@ function prepareData(data, options) {
 
 		if (!options.prependFolderName) {
 			name = name.split("/").pop();
-		}
-
-		if (options.suffixFileName) {
-			name = name + options.suffixFileName;
 		}
 
 		let frame = {
