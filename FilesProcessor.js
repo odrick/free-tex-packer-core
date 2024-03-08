@@ -3,6 +3,7 @@ let PackProcessor = require("./PackProcessor");
 let TextureRenderer = require("./utils/TextureRenderer");
 let tinify = require("tinify");
 let startExporter = require("./exporters/index").startExporter;
+let path = require("path");
 
 class FilesProcessor {
     
@@ -24,9 +25,7 @@ class FilesProcessor {
                             const suffix = options.suffix;
                             let ix = options.suffixInitialValue;
                             for(let item of packResult) {
-                                let fName = options.textureName + (packResult.length > 1 ? suffix + ix : "");
-
-                                FilesProcessor.processPackResultItem(fName, item, options, (files) => {
+                                FilesProcessor.processPackResultItem(options.textureName, packResult.length > 1 || options.alwaysAddSuffix ? suffix + ix : "", item, options, (files) => {
                                     resFiles = resFiles.concat(files);
                                     readyParts++;
                                     if(readyParts >= packResult.length) {
@@ -45,7 +44,7 @@ class FilesProcessor {
             });
     }
     
-    static processPackResultItem(fName, item, options, callback) {
+    static processPackResultItem(fName, fNameSuffix, item, options, callback) {
         let files = [];
 
         let pixelFormat = options.textureFormat == "png" ? "RGBA8888" : "RGB888";
@@ -54,7 +53,7 @@ class FilesProcessor {
         item.buffer.getBuffer(mime, (err, srcBuffer) => {
             FilesProcessor.tinifyImage(srcBuffer, options, (buffer) => {
                 let opts = {
-                    imageName: fName + "." + options.textureFormat,
+                    imageName: path.basename(fName + fNameSuffix) + "." + options.textureFormat,
                     imageData: buffer.toString("base64"),
                     format: pixelFormat,
                     textureFormat: options.textureFormat,
@@ -69,7 +68,7 @@ class FilesProcessor {
                 };
                 
                 files.push({
-                    name: fName + "." + options.exporter.fileExt,
+                    name: fName + fNameSuffix + "." + options.exporter.fileExt,
                     buffer: Buffer.from(startExporter(options.exporter, item.data, opts))
                 });
 
