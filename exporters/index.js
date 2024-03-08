@@ -80,7 +80,7 @@ function prepareData(data, options) {
 		}
 
 		if (!options.prependFolderName) {
-			name = name.split("/").pop();
+			name = path.basename(name);
 		}
 
 		let frame = {
