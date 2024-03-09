@@ -74,7 +74,7 @@ class FilesProcessor {
 
                 if(!options.base64Export) {
                     files.push({
-                        name: fName + "." + options.textureFormat,
+                        name: fName + fNameSuffix + "." + options.textureFormat,
                         buffer: buffer
                     });
                 }
