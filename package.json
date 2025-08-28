@@ -6,6 +6,7 @@
   "url": "http://github.com/odrick/free-tex-packer-core",
   "main": "index.js",
   "types": "index.d.ts",
+  "type": "commonjs",
   "scripts": {},
   "keywords": [
     "texture",
