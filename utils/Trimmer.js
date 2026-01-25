@@ -19,7 +19,7 @@ class Trimmer {
             }
         }
 
-        return 0;
+        return x;
     }
 
     static getRightSpace(data, width, height, threshold=0) {
