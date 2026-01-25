@@ -118,15 +118,17 @@ class PackProcessor {
             height = ph;
         }
 
+        if (options.allowTrim) {
+            let size = Trimmer.trim(rects, alphaThreshold);
+            minWidth = size.w;
+            minHeight = size.h;
+        }
+
         if (width < minWidth || height < minHeight) {
             if (onError) onError({
                 description: "Invalid size. Min: " + minWidth + "x" + minHeight
             });
             return;
-        }
-
-        if (options.allowTrim) {
-            Trimmer.trim(rects, alphaThreshold);
         }
 
         for (let item of rects) {
