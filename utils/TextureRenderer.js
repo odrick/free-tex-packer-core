@@ -113,7 +113,8 @@ class TextureRenderer {
 
 			if (item.rotated) {
 				img = img.clone();
-				img.rotate({ deg: 90 });
+				// Jimp 1.x rotates CCW for positive deg; packer expects CW 90° (Jimp 0.2 behavior).
+				img.rotate({ deg: -90 });
 
 				sx = item.sourceSize.h - item.spriteSourceSize.h - item.spriteSourceSize.y;
 				sy = item.spriteSourceSize.x;
