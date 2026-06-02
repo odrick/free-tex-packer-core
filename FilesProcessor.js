@@ -1,4 +1,4 @@
-const { JimpMime } = require("./utils/jimp");
+const { getPixelFormat, encodeTextureBuffer } = require("./utils/imageFormats");
 let PackProcessor = require("./PackProcessor");
 let TextureRenderer = require("./utils/TextureRenderer");
 let tinify = require("tinify");
@@ -55,10 +55,9 @@ class FilesProcessor {
     static processPackResultItem(fName, item, options, callback) {
         let files = [];
 
-        let pixelFormat = options.textureFormat == "png" ? "RGBA8888" : "RGB888";
-        let mime = options.textureFormat == "png" ? JimpMime.png : JimpMime.jpeg;
+        let pixelFormat = getPixelFormat(options.textureFormat);
 
-        item.buffer.getBuffer(mime)
+        encodeTextureBuffer(item.buffer, options.textureFormat)
             .then((srcBuffer) => {
                 FilesProcessor.tinifyImage(srcBuffer, options, (buffer) => {
                     let opts = {

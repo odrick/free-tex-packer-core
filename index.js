@@ -3,7 +3,7 @@ let getExporterByType = require("./exporters/index").getExporterByType;
 let getFilterByType = require("./filters").getFilterByType;
 let FilesProcessor = require("./FilesProcessor");
 let appInfo = require('./package.json');
-const { Jimp } = require("./utils/jimp");
+const { readImage, normalizeTextureFormat } = require("./utils/imageFormats");
 
 function getErrorDescription(txt) {
     return appInfo.name + ": " + txt;
@@ -14,7 +14,7 @@ function fixPath(path) {
 }
 
 function loadImage(file, files) {
-	return Jimp.read(file.contents)
+	return readImage(file.contents, file.path)
 		.then(image => {
 			image.name = fixPath(file.path);
 			image._base64 = file.contents.toString("base64");
@@ -47,7 +47,7 @@ function packAsync(images, options) {
     options.alphaThreshold = options.alphaThreshold === undefined ? 0 : options.alphaThreshold;
     options.removeFileExtension = options.removeFileExtension === undefined ? false : options.removeFileExtension;
     options.prependFolderName = options.prependFolderName === undefined ? true : options.prependFolderName;
-    options.textureFormat = options.textureFormat === undefined ? "png" : options.textureFormat;
+    options.textureFormat = options.textureFormat === undefined ? "png" : normalizeTextureFormat(options.textureFormat);
     options.base64Export = options.base64Export === undefined ? false : options.base64Export;
     options.scale = options.scale === undefined ? 1 : options.scale;
     options.scaleMethod = options.scaleMethod === undefined ? "BILINEAR" : options.scaleMethod;

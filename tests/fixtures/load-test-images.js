@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { isSupportedInputPath } = require("../../utils/imageFormats");
 
 const IMAGES_DIR = path.join(__dirname, "..", "images");
 
@@ -15,7 +16,7 @@ function collectPngFiles(dir, relativeDir = "") {
 
 		if (entry.isDirectory()) {
 			images.push(...collectPngFiles(abs, rel));
-		} else if (/\.png$/i.test(entry.name)) {
+		} else if (isSupportedInputPath(entry.name)) {
 			images.push({
 				path: rel,
 				contents: fs.readFileSync(abs),

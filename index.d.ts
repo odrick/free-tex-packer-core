@@ -44,6 +44,7 @@ export enum TrimMode {
 export enum TextureFormat {
   PNG = 'png',
   JPG = 'jpg',
+  WEBP = 'webp',
 }
 
 /**

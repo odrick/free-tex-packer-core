@@ -1,5 +1,6 @@
 let list = require("./list.json");
 let appInfo = require("../package.json");
+const { getBase64Prefix } = require("../utils/imageFormats");
 let mustache = require("mustache");
 let fs = require("fs");
 let path = require("path");
@@ -61,10 +62,7 @@ function prepareData(data, options) {
 	opt.imageName = opt.imageName || "texture.png";
 	opt.format = opt.format || "RGBA8888";
 	opt.scale = opt.scale || 1;
-	opt.base64Prefix =
-		options.textureFormat == "png"
-			? "data:image/png;base64,"
-			: "data:image/jpeg;base64,";
+	opt.base64Prefix = getBase64Prefix(options.textureFormat);
 
 	let ret = data.map((item, index) => {
 		let name = item.name;

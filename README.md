@@ -120,7 +120,7 @@ texturePacker(images, options, (files, error) => {
 * `alphaThreshold` - threshold alpha value. Default: **0**
 * `removeFileExtension` - remove file extensions from frame names. Default: **false**
 * `prependFolderName` - prepend folder name to frame names. Default: **true**
-* `textureFormat` - output file format (png or jpg). Default: **png**
+* `textureFormat` - output file format (`png`, `jpg`, or `webp`). Default: **png**
 * `base64Export` - export texture as base64 string to atlas meta tag. Default: **false**
 * `scale` - scale size and positions in atlas. Default: **1**
 * `scaleMethod` - texture scaling method (BILINEAR, NEAREST_NEIGHBOR, BICUBIC, HERMITE, BEZIER). Default: **BILINEAR**

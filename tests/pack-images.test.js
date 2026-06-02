@@ -1,6 +1,7 @@
 const { describe, it, before } = require("node:test");
 const assert = require("node:assert/strict");
 const path = require("path");
+const sharp = require("sharp");
 
 const { packAsync } = require("../index");
 const {
@@ -120,6 +121,63 @@ describePack("pack with real images", () => {
 		assert.ok(pngFile.buffer.length > 0);
 
 		writePackOutput(files, "scaled-grayscale");
+	});
+
+	it("packs output as webp atlas", async () => {
+		let subset = images.filter((img) => img.path.startsWith("snowflake/")).slice(0, 3);
+		if (subset.length === 0) {
+			subset = images.slice(0, 3);
+		}
+
+		const files = await packAsync(subset, {
+			textureName: "atlas-webp",
+			width: 512,
+			height: 512,
+			padding: 1,
+			exporter: "JsonHash",
+			textureFormat: "webp",
+		});
+
+		const jsonFile = findFile(files, /\.json$/);
+		const webpFile = findFile(files, /\.webp$/);
+
+		assert.ok(jsonFile);
+		assert.ok(webpFile);
+		assert.equal(webpFile.buffer.toString("ascii", 8, 12), "WEBP");
+
+		const meta = JSON.parse(jsonFile.buffer.toString("utf8"));
+		assert.equal(meta.meta.image, "atlas-webp.webp");
+		assert.equal(meta.meta.format, "RGBA8888");
+
+		writePackOutput(files, "webp-output");
+	});
+
+	it("reads webp source images", async () => {
+		const pngSource =
+			images.find((img) => img.path.startsWith("snowflake/")) ||
+			images.find((img) => /\.png$/i.test(img.path));
+		if (!pngSource) {
+			console.log("Skipping webp input test: no PNG source in tests/images");
+			return;
+		}
+
+		const webpContents = await sharp(pngSource.contents).webp().toBuffer();
+		const webpImages = [
+			{ path: "converted/from-png.webp", contents: webpContents },
+		];
+
+		const files = await packAsync(webpImages, {
+			textureName: "webp-input",
+			width: 512,
+			height: 512,
+			exporter: "JsonHash",
+		});
+
+		const jsonFile = findFile(files, /\.json$/);
+		const meta = JSON.parse(jsonFile.buffer.toString("utf8"));
+		assert.ok(meta.frames["converted/from-png.webp"]);
+
+		writePackOutput(files, "webp-input");
 	});
 
 	it("exports every predefined format without error", async () => {
