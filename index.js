@@ -3,7 +3,7 @@ let getExporterByType = require("./exporters/index").getExporterByType;
 let getFilterByType = require("./filters").getFilterByType;
 let FilesProcessor = require("./FilesProcessor");
 let appInfo = require('./package.json');
-let Jimp = require("jimp");
+const { Jimp } = require("./utils/jimp");
 
 function getErrorDescription(txt) {
     return appInfo.name + ": " + txt;

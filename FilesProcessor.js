@@ -1,4 +1,4 @@
-let Jimp = require("jimp");
+const { JimpMime } = require("./utils/jimp");
 let PackProcessor = require("./PackProcessor");
 let TextureRenderer = require("./utils/TextureRenderer");
 let tinify = require("tinify");
@@ -14,7 +14,14 @@ class FilesProcessor {
                 let readyParts = 0;
 
                 for(let data of res) {
-                    new TextureRenderer(data, options, (renderResult) => {
+                    new TextureRenderer(data, options, (renderResult, renderError) => {
+                        if (renderError) {
+                            if (errorCallback) {
+                                errorCallback(renderError);
+                            }
+                            return;
+                        }
+
                         packResult.push({
                             data: renderResult.data,
                             buffer: renderResult.buffer
@@ -49,40 +56,44 @@ class FilesProcessor {
         let files = [];
 
         let pixelFormat = options.textureFormat == "png" ? "RGBA8888" : "RGB888";
-        let mime = options.textureFormat == "png" ? Jimp.MIME_PNG : Jimp.MIME_JPEG;
+        let mime = options.textureFormat == "png" ? JimpMime.png : JimpMime.jpeg;
 
-        item.buffer.getBuffer(mime, (err, srcBuffer) => {
-            FilesProcessor.tinifyImage(srcBuffer, options, (buffer) => {
-                let opts = {
-                    imageName: fName + "." + options.textureFormat,
-                    imageData: buffer.toString("base64"),
-                    format: pixelFormat,
-                    textureFormat: options.textureFormat,
-                    imageWidth: item.buffer.bitmap.width,
-                    imageHeight: item.buffer.bitmap.height,
-                    removeFileExtension: options.removeFileExtension,
-                    prependFolderName: options.prependFolderName,
-                    base64Export: options.base64Export,
-                    scale: options.scale,
-                    appInfo: options.appInfo,
-                    trimMode: options.trimMode
-                };
-                
-                files.push({
-                    name: fName + "." + options.exporter.fileExt,
-                    buffer: Buffer.from(startExporter(options.exporter, item.data, opts))
-                });
+        item.buffer.getBuffer(mime)
+            .then((srcBuffer) => {
+                FilesProcessor.tinifyImage(srcBuffer, options, (buffer) => {
+                    let opts = {
+                        imageName: fName + "." + options.textureFormat,
+                        imageData: buffer.toString("base64"),
+                        format: pixelFormat,
+                        textureFormat: options.textureFormat,
+                        imageWidth: item.buffer.bitmap.width,
+                        imageHeight: item.buffer.bitmap.height,
+                        removeFileExtension: options.removeFileExtension,
+                        prependFolderName: options.prependFolderName,
+                        base64Export: options.base64Export,
+                        scale: options.scale,
+                        appInfo: options.appInfo,
+                        trimMode: options.trimMode
+                    };
 
-                if(!options.base64Export) {
                     files.push({
-                        name: fName + "." + options.textureFormat,
-                        buffer: buffer
+                        name: fName + "." + options.exporter.fileExt,
+                        buffer: Buffer.from(startExporter(options.exporter, item.data, opts))
                     });
-                }
 
-                callback(files);
+                    if (!options.base64Export) {
+                        files.push({
+                            name: fName + "." + options.textureFormat,
+                            buffer: buffer
+                        });
+                    }
+
+                    callback(files);
+                });
+            })
+            .catch((err) => {
+                throw err;
             });
-        });
     }
     
     static tinifyImage(buffer, options, callback) {

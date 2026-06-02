@@ -4,4 +4,6 @@
 #node modules
 node_modules/*
 
-package-lock.json
+# local test assets (not committed)
+tests/images/
+tests/out/
