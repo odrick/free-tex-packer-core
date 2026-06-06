@@ -19,7 +19,7 @@ class Trimmer {
             }
         }
 
-        return 0;
+        return x;
     }
 
     static getRightSpace(data, width, height, threshold=0) {
@@ -65,6 +65,7 @@ class Trimmer {
     }
 
     static trim(rects, threshold=0) {
+        let size = { w: 0, h: 0};
 
         for(let item of rects) {
 
@@ -99,7 +100,12 @@ class Trimmer {
                 item.frame.w = item.spriteSourceSize.w;
                 item.frame.h = item.spriteSourceSize.h;
             }
+
+            size.w = Math.max(size.w, item.spriteSourceSize.w);
+            size.h = Math.max(size.h, item.spriteSourceSize.h);
         }
+
+        return size;
     }
 }
 
