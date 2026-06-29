@@ -1,3 +1,5 @@
+"use strict";
+
 let Filter = require('./Filter');
 
 class Grayscale extends Filter {

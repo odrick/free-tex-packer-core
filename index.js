@@ -1,3 +1,5 @@
+"use strict";
+
 let getPackerByType = require("./packers/index").getPackerByType;
 let getExporterByType = require("./exporters/index").getExporterByType;
 let getFilterByType = require("./filters").getFilterByType;
@@ -18,12 +20,10 @@ function loadImage(file, files) {
 		.then(image => {
 			image.name = fixPath(file.path);
 			image._base64 = file.contents.toString("base64");
-			image.width = image.bitmap.width;
-			image.height = image.bitmap.height;
 			files[image.name] = image;
 		})
 		.catch(e => {
-			console.error(getErrorDescription("Error reading " + file.path));
+			throw new Error(getErrorDescription("Error reading " + file.path + ": " + e.message));
 		});
 }
 
