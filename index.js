@@ -25,7 +25,7 @@ function loadImage(file, files) {
 			files[image.name] = image;
 		})
 		.catch(e => {
-			console.error(getErrorDescription("Error reading " + file.path));
+			throw new Error(getErrorDescription("Error reading " + file.path + ": " + e.message));
 		});
 }
 
