@@ -20,8 +20,6 @@ function loadImage(file, files) {
 		.then(image => {
 			image.name = fixPath(file.path);
 			image._base64 = file.contents.toString("base64");
-			image.width = image.bitmap.width;
-			image.height = image.bitmap.height;
 			files[image.name] = image;
 		})
 		.catch(e => {
