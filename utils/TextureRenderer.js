@@ -125,83 +125,25 @@ class TextureRenderer {
 			}
 
 			if (options.extrude) {
-				let extrudeImage = img.clone();
+				const e = options.extrude;
 
-				extrudeImage.resize({ w: 1, h: 1 });
-				blitImage(extrudeImage, img, 0, 0, 0, 0, 1, 1);
-				extrudeImage.resize({ w: options.extrude, h: options.extrude });
-				blitImage(
-					this.buffer,
-					extrudeImage,
-					dx - options.extrude,
-					dy - options.extrude,
-					0,
-					0,
-					options.extrude,
-					options.extrude
-				);
+				// Corners — repeat the single corner pixel across the extrude×extrude block.
+				for (let row = 0; row < e; row++) {
+					for (let col = 0; col < e; col++) {
+						blitImage(this.buffer, img, dx - e + col, dy - e + row, sx,          sy,          1, 1);
+						blitImage(this.buffer, img, dx + sw + col, dy - e + row, sx + sw - 1, sy,          1, 1);
+						blitImage(this.buffer, img, dx - e + col, dy + sh + row, sx,          sy + sh - 1, 1, 1);
+						blitImage(this.buffer, img, dx + sw + col, dy + sh + row, sx + sw - 1, sy + sh - 1, 1, 1);
+					}
+				}
 
-				extrudeImage.resize({ w: 1, h: 1 });
-				blitImage(extrudeImage, img, 0, 0, ow - 1, 0, 1, 1);
-				extrudeImage.resize({ w: options.extrude, h: options.extrude });
-				blitImage(
-					this.buffer,
-					extrudeImage,
-					dx + sw,
-					dy - options.extrude,
-					0,
-					0,
-					options.extrude,
-					options.extrude
-				);
-
-				extrudeImage.resize({ w: 1, h: 1 });
-				blitImage(extrudeImage, img, 0, 0, 0, oh - 1, 1, 1);
-				extrudeImage.resize({ w: options.extrude, h: options.extrude });
-				blitImage(
-					this.buffer,
-					extrudeImage,
-					dx - options.extrude,
-					dy + sh,
-					0,
-					0,
-					options.extrude,
-					options.extrude
-				);
-
-				extrudeImage.resize({ w: 1, h: 1 });
-				blitImage(extrudeImage, img, 0, 0, ow - 1, oh - 1, 1, 1);
-				extrudeImage.resize({ w: options.extrude, h: options.extrude });
-				blitImage(
-					this.buffer,
-					extrudeImage,
-					dx + sw,
-					dy + sh,
-					0,
-					0,
-					options.extrude,
-					options.extrude
-				);
-
-				extrudeImage.resize({ w: 1, h: sh });
-				blitImage(extrudeImage, img, 0, 0, 0, sy, 1, sh);
-				extrudeImage.resize({ w: options.extrude, h: sh });
-				blitImage(this.buffer, extrudeImage, dx - options.extrude, dy, 0, 0, options.extrude, sh);
-
-				extrudeImage.resize({ w: 1, h: sh });
-				blitImage(extrudeImage, img, 0, 0, ow - 1, sy, 1, sh);
-				extrudeImage.resize({ w: options.extrude, h: sh });
-				blitImage(this.buffer, extrudeImage, dx + sw, dy, 0, 0, options.extrude, sh);
-
-				extrudeImage.resize({ w: sw, h: 1 });
-				blitImage(extrudeImage, img, 0, 0, sx, 0, sw, 1);
-				extrudeImage.resize({ w: sw, h: options.extrude });
-				blitImage(this.buffer, extrudeImage, dx, dy - options.extrude, 0, 0, sw, options.extrude);
-
-				extrudeImage.resize({ w: sw, h: 1 });
-				blitImage(extrudeImage, img, 0, 0, sx, oh - 1, sw, 1);
-				extrudeImage.resize({ w: sw, h: options.extrude });
-				blitImage(this.buffer, extrudeImage, dx, dy + sh, 0, 0, sw, options.extrude);
+				// Edges — repeat each edge column/row across the full extrude band.
+				for (let i = 0; i < e; i++) {
+					blitImage(this.buffer, img, dx - e + i, dy, sx,          sy, 1,  sh);
+					blitImage(this.buffer, img, dx + sw + i, dy, sx + sw - 1, sy, 1,  sh);
+					blitImage(this.buffer, img, dx, dy - e + i, sx, sy,          sw, 1);
+					blitImage(this.buffer, img, dx, dy + sh + i, sx, sy + sh - 1, sw, 1);
+				}
 			}
 
 			blitImage(this.buffer, img, dx, dy, sx, sy, sw, sh);
