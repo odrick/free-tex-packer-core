@@ -1,3 +1,5 @@
+"use strict";
+
 let list = require("./list.json");
 let appInfo = require("../package.json");
 const { getBase64Prefix } = require("../utils/imageFormats");

@@ -1,3 +1,5 @@
+"use strict";
+
 let Filter = require('./Filter');
 let Mask = require('./Mask');
 let Grayscale = require('./Grayscale');

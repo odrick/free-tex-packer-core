@@ -1,3 +1,5 @@
+"use strict";
+
 let getPackerByType = require("./packers/index").getPackerByType;
 let getExporterByType = require("./exporters/index").getExporterByType;
 let getFilterByType = require("./filters").getFilterByType;

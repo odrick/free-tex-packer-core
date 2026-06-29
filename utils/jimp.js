@@ -1,3 +1,5 @@
+"use strict";
+
 const { Jimp, JimpMime, ResizeStrategy } = require("jimp");
 
 /**

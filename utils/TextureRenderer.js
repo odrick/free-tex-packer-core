@@ -1,3 +1,5 @@
+"use strict";
+
 const { Jimp, blitImage, getResizeStrategy } = require("./jimp");
 
 class TextureRenderer {

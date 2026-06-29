@@ -1,3 +1,5 @@
+"use strict";
+
 const path = require("path");
 const sharp = require("sharp");
 const { Jimp, JimpMime } = require("./jimp");
