@@ -161,4 +161,14 @@
     "fileExt": "json",
     "predefined": true
   }
+  ,
+  {
+    "type": "Monogame",
+    "description": "Monogame sprite sheet",
+    "allowTrim": false,
+    "allowRotation": true,
+    "template": "Monogame.mst",
+    "fileExt": "spritesheet",    
+    "predefined": true
+  }  
 ]

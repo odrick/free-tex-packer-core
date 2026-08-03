@@ -113,6 +113,7 @@ export enum PackerExporterType {
   UNREAL = 'Unreal',
   UIKIT = 'UIKit',
   UNITY3D = 'Unity3D',
+  MONOGAME = 'Monogame'
 }
 
 /**
