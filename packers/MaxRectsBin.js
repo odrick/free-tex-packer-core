@@ -1,3 +1,5 @@
+"use strict";
+
 let Packer = require("./Packer");
 let Rect = require("../math/Rect");
 

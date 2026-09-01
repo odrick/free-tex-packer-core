@@ -1,3 +1,5 @@
+"use strict";
+
 let MaxRectsPacker = require("./MaxRectsPacker");
 let MaxRectsBin = require("./MaxRectsBin");
 let OptimalPacker = require("./OptimalPacker");

@@ -1,3 +1,5 @@
+"use strict";
+
 let MaxRectsBinPack = require('./packers/MaxRectsBin');
 let OptimalPacker = require('./packers/OptimalPacker');
 let allPackers = require('./packers').list;

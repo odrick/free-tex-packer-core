@@ -1,3 +1,5 @@
+"use strict";
+
 const { getPixelFormat, encodeTextureBuffer } = require("./utils/imageFormats");
 let PackProcessor = require("./PackProcessor");
 let TextureRenderer = require("./utils/TextureRenderer");

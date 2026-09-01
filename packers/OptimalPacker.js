@@ -1,3 +1,5 @@
+"use strict";
+
 let Packer = require("./Packer");
 
 const METHOD = {

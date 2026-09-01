@@ -1,3 +1,5 @@
+"use strict";
+
 const METHOD = {
     Default: "Default"
 };

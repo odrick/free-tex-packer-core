@@ -1,3 +1,5 @@
+"use strict";
+
 let MaxRectsPackerEngine = require("maxrects-packer").MaxRectsPacker;
 let PACKING_LOGIC = require("maxrects-packer").PACKING_LOGIC;
 
