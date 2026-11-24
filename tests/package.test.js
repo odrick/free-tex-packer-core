@@ -45,4 +45,8 @@ describe("package.json", () => {
 		assert.equal(pkg.bugs && pkg.bugs.url, expected + "/issues");
 		assert.match(pkg.repository.url, /github\.com\/odrick\/free-tex-packer-core/);
 	});
+
+	it('uses an https "url" (it is written into the exported files as the generator link)', () => {
+		assert.equal(pkg.url, "https://github.com/odrick/free-tex-packer-core");
+	});
 });
