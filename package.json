@@ -3,9 +3,12 @@
   "displayName": "Free texture packer",
   "version": "0.3.9",
   "description": "Free texture packer core",
-  "url": "http://github.com/odrick/free-tex-packer-core",
+  "url": "https://github.com/odrick/free-tex-packer-core",
   "main": "index.js",
   "types": "index.d.ts",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "test": "node --test tests/*.test.js"
   },
@@ -29,6 +32,10 @@
     "url": "git+https://github.com/odrick/free-tex-packer-core"
   },
   "license": "MIT",
+  "homepage": "https://github.com/odrick/free-tex-packer-core#readme",
+  "bugs": {
+    "url": "https://github.com/odrick/free-tex-packer-core/issues"
+  },
   "dependencies": {
     "@jvitela/mustache-wax": "^1.0.1",
     "jimp": "^1.6.1",

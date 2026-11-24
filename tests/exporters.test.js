@@ -115,6 +115,25 @@ describe("exporters (mustache templates)", () => {
 	}
 });
 
+describe("XML declaration", () => {
+	// The XML spec requires the declaration to be the very first thing in the document;
+	// strict parsers (e.g. expat, used by Python and many game engines) reject it after a comment.
+	for (const exporter of exporterList) {
+		it(`${exporter.type}: <?xml ...?> comes first when present`, () => {
+			const output = renderExporter(exporter.type);
+			const at = output.indexOf("<?xml");
+			if (at >= 0) {
+				assert.equal(at, 0, `${exporter.type}: found <?xml at offset ${at}, expected 0`);
+			}
+		});
+	}
+
+	it("XML and Starling exporters do write a declaration", () => {
+		assert.ok(renderExporter("XML").startsWith("<?xml"));
+		assert.ok(renderExporter("Starling").startsWith("<?xml"));
+	});
+});
+
 describe("mustache-wax formatters", () => {
 	it("Unity3D mirror formatter flips Y against image height", () => {
 		const output = renderExporter("Unity3D");
