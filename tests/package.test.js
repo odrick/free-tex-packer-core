@@ -2,6 +2,7 @@ const { describe, it } = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
+const { spawnSync } = require("node:child_process");
 
 const root = path.join(__dirname, "..");
 const pkg = require("../package.json");
@@ -48,5 +49,47 @@ describe("package.json", () => {
 
 	it('uses an https "url" (it is written into the exported files as the generator link)', () => {
 		assert.equal(pkg.url, "https://github.com/odrick/free-tex-packer-core");
+	});
+});
+
+describe("published package", () => {
+	// `npm pack --dry-run` lists what `npm publish` would upload, without creating anything
+	function packedFiles() {
+		const result = spawnSync("npm pack --dry-run --json", { cwd: root, encoding: "utf8", shell: true });
+		assert.equal(result.status, 0, result.stderr);
+		return JSON.parse(result.stdout)[0].files.map((f) => f.path.split("\\").join("/"));
+	}
+
+	it("contains the library, its templates and typings", () => {
+		const files = packedFiles();
+		for (const required of [
+			"index.js",
+			"index.d.ts",
+			"FilesProcessor.js",
+			"PackProcessor.js",
+			"README.md",
+			"LICENSE.md",
+			"package.json",
+			"exporters/index.js",
+			"exporters/list.json",
+			"exporters/JsonHash.mst",
+			"exporters/XML.mst",
+			"packers/index.js",
+			"filters/index.js",
+			"utils/imageFormats.js",
+		]) {
+			assert.ok(files.includes(required), `${required} is missing from the package`);
+		}
+	});
+
+	it("does not contain the tests", () => {
+		assert.deepEqual(packedFiles().filter((f) => f.startsWith("tests/")), []);
+	});
+
+	it("contains every .mst template listed in exporters/list.json", () => {
+		const files = packedFiles();
+		for (const exporter of require("../exporters/list.json")) {
+			if (exporter.template) assert.ok(files.includes("exporters/" + exporter.template), exporter.template);
+		}
 	});
 });

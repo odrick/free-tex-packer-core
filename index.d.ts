@@ -1,10 +1,18 @@
 declare module 'free-tex-packer-core' {
+  /**
+   * Packs the images. Never throws: any problem is passed to the callback as the second argument
+   * (the first one, `files`, is `undefined` then). A failed run never returns partial results:
+   * invalid options, an empty or invalid `files` list and images that cannot be read are all errors.
+   */
   export default function pack(
     files: Array<{ path: string; contents: Buffer }>,
     config?: TexturePackerOptions,
     callback?: (files: Array<{ name: string, buffer: Buffer }>, error?: Error) => void,
   ): void;
 
+  /**
+   * Promise version of {@link pack}. Never throws synchronously: every problem rejects the promise.
+   */
   export function packAsync(
     files: Array<{ path: string; contents: Buffer }>,
     config?: TexturePackerOptions,

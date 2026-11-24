@@ -64,6 +64,26 @@ function packImages() {
 }
 ``` 
 
+# Errors
+
+`texturePacker(images, options, callback)` never throws and `packAsync(images, options)` never throws synchronously:
+every problem is delivered through the callback (its second argument, the first one is `undefined`) or by rejecting
+the returned promise. A failed run never returns partial results.
+
+Problems with the input or the options are reported with an `Error` whose message starts with `free-tex-packer-core:`:
+
+| problem | message |
+| ---     | ---     |
+| `images` is not an array | `images must be an array` |
+| `images` is empty | `No images to pack` |
+| an image cannot be read (not an image, damaged, no `contents` Buffer) | `Cannot read 2 images: dir/a.png (reason), b.png (reason)` |
+| unknown option value | `Unknown exporter X`, `Unknown packer X`, `Unknown packer method X`, `Unknown filter X` |
+| unsupported `textureFormat` | `Unsupported textureFormat "bmp". Use: png, jpg, webp` |
+
+If **any** image cannot be read the whole run fails and the message lists every such image, in the order they were
+given, so a texture is never packed without some of its sprites. Filter the files before packing if your input can
+contain non-image files.
+
 # Advanced usage
 
 Use packer options object
