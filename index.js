@@ -13,21 +13,58 @@ function fixPath(path) {
     return path.split("\\").join("/");
 }
 
-function loadImage(file, files) {
-	return readImage(file.contents, file.path)
+/**
+ * Decodes one image into `files`. A file that cannot be read is recorded in `failures[index]`
+ * (as "name (reason)"), so that the whole run can fail with the full list instead of silently
+ * packing an atlas without it.
+ */
+function loadImage(file, files, failures, index) {
+	let name = file && typeof file.path === "string" ? fixPath(file.path) : "image #" + index;
+
+	let reading;
+	try {
+		reading = readImage(file.contents, file.path);
+	}
+	catch (e) {
+		// e.g. a missing file or contents that are not a Buffer
+		reading = Promise.reject(e);
+	}
+
+	return reading
 		.then(image => {
-			image.name = fixPath(file.path);
+			image.name = name;
 			image._base64 = file.contents.toString("base64");
 			image.width = image.bitmap.width;
 			image.height = image.bitmap.height;
 			files[image.name] = image;
 		})
 		.catch(e => {
-			console.error(getErrorDescription("Error reading " + file.path));
+			failures[index] = name + (e && e.message ? " (" + e.message + ")" : "");
 		});
 }
 
+/**
+ * Packs the images. Every problem is reported through the returned promise (and so through the
+ * callback of `pack`): invalid input or options never throw synchronously.
+ */
 function packAsync(images, options) {
+    try {
+        return startPacking(images, options);
+    }
+    catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+function startPacking(images, options) {
+    if(!Array.isArray(images)) {
+        throw new Error(getErrorDescription("images must be an array"));
+    }
+
+    if(!images.length) {
+        throw new Error(getErrorDescription("No images to pack"));
+    }
+
     options = options || {};
     options = Object.assign({}, options);
 
@@ -80,12 +117,12 @@ function packAsync(images, options) {
         exporter = options.exporter;
     }
 
-	if(!exporter.allowRotation) options.allowRotation = false;
-	if(!exporter.allowTrim) options.allowTrim = false;
-
     if(!exporter) {
         throw new Error(getErrorDescription("Unknown exporter " + options.exporter));
     }
+
+	if(!exporter.allowRotation) options.allowRotation = false;
+	if(!exporter.allowTrim) options.allowTrim = false;
 
     let filter = getFilterByType(options.filter);
     if(!filter) {
@@ -98,15 +135,21 @@ function packAsync(images, options) {
     options.filter = filter;
 
 	let files = {};
+	let failures = [];
 	let p = [];
 
-	for(let file of images) {
-		p.push(loadImage(file, files));
-	}
+	images.forEach((file, index) => {
+		p.push(loadImage(file, files, failures, index));
+	});
 
     return new Promise((resolve, reject) =>
         Promise.all(p)
             .then(() => {
+                let failed = failures.filter(Boolean);
+                if(failed.length) {
+                    throw new Error(getErrorDescription("Cannot read " + failed.length + (failed.length === 1 ? " image: " : " images: ") + failed.join(", ")));
+                }
+
                 FilesProcessor.start(files, options,
                     (res) => resolve(res),
                     (error) => reject(error)
