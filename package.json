@@ -6,6 +6,17 @@
   "url": "https://github.com/odrick/free-tex-packer-core",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "FilesProcessor.js",
+    "PackProcessor.js",
+    "exporters",
+    "filters",
+    "math",
+    "packers",
+    "utils"
+  ],
   "engines": {
     "node": ">=20.9.0"
   },
