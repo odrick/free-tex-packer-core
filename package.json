@@ -1,7 +1,7 @@
 {
   "name": "free-tex-packer-core",
   "displayName": "Free texture packer",
-  "version": "0.3.9",
+  "version": "0.4.0",
   "description": "Free texture packer core",
   "url": "https://github.com/odrick/free-tex-packer-core",
   "main": "index.js",
